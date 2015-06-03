@@ -8,7 +8,8 @@
 #   None
 #
 # Commands:
-#   Say anything!
+#   spell: <sentence to correct>
+#   addword: <word to add>
 #
 # Author:
 #   J3RN
@@ -28,3 +29,15 @@ module.exports = (robot) ->
       if words.indexOf(word) == -1
         msg.send word + ' is spelled wrong'
     )
+
+  robot.hear /addword: (\w+)/, (msg) ->
+    said_words = msg.match[0].split(/\s/)
+    word = said_words[1]
+
+    fs.appendFile('./words', word + '\n', (err) ->
+      if (err)
+        throw err
+
+      msg.send word + " added!"
+    )
+
