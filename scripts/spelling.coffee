@@ -16,9 +16,8 @@
 
 fs = require 'fs'
 
-words = fs.readFileSync('./words').toString().split('\n').map((word) -> return word.toLowerCase())
-
 module.exports = (robot) ->
+  robot.brain.set 'dict-words', fs.readFileSync('./words').toString().split('\n').map((word) -> return word.toLowerCase())
 
   robot.hear /spell: ((?:\w+\s*)+)/g, (msg) ->
     said_words = msg.match[0].split(/\s/)
@@ -26,7 +25,7 @@ module.exports = (robot) ->
     said_words = said_words.map (word) -> return word.toLowerCase()
 
     said_words.forEach((word) ->
-      if words.indexOf(word) == -1
+      if robot.brain.get('dict-words').indexOf(word) == -1
         msg.send word + ' is spelled wrong'
     )
 
@@ -34,10 +33,9 @@ module.exports = (robot) ->
     said_words = msg.match[0].split(/\s/)
     word = said_words[1]
 
-    fs.appendFile('./words', word + '\n', (err) ->
-      if (err)
-        throw err
+    dict_words = robot.brain.get 'dict-words'
+    dict_words.push(word)
+    robot.brain.set 'dict-words', dict_words
 
-      msg.send word + " added!"
-    )
+    msg.send word + ' added'
 
