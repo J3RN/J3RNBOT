@@ -46,10 +46,15 @@ module.exports = (robot) ->
     said_words.shift()
     said_words = said_words.map (word) -> return word.toLowerCase()
 
+    bad_count = 0
     said_words.forEach((word) ->
       if robot.brain.get('dict-words').indexOf(word) == -1
+        bad_count++
         msg.send word + ' is spelled wrong. Did you mean ' + find_closest(word) + '?'
     )
+
+    if bad_count == 0
+      msg.reply "Looks good to me!"
 
   robot.hear /addword: (\w+)/, (msg) ->
     said_words = msg.match[0].split(/\s/)
