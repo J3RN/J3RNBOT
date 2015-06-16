@@ -30,7 +30,7 @@ module.exports = (robot) ->
     word2_bigrams = bigramate(word2)
 
     num_matching_bigrams = word1_bigrams.reduce((prev, current, index, array) ->
-      return word2_bigrams[index] == current ? prev + 1 : prev - 1
+      return prev + (word2_bigrams[index] == current ? 1 : -1)
     , 0)
 
     return num_matching_bigrams / word1_bigrams.length
@@ -64,5 +64,4 @@ module.exports = (robot) ->
     dict_words.push(word)
     robot.brain.set 'dict-words', dict_words
 
-    msg.send word + ' added'
-
+    msg.send word + ' added to brain'
