@@ -26,14 +26,15 @@ module.exports = (robot) ->
       bigrams.push word.slice(i, i + 2) for i in [0..(word.length - 2)]
       return bigrams
 
-    word1_bigrams = bigramate(word1)
-    word2_bigrams = bigramate(word2)
+    sorted_words = [word1, word2].sort (a, b) -> return a.length - b.length
+    short_bigrams = bigramate(sorted_words[0])
+    long_bigrams = bigramate(sorted_words[1])
 
-    num_matching_bigrams = word1_bigrams.reduce((prev, current, index, array) ->
-      return prev + (word2_bigrams[index] == current ? 1 : -1)
+    bigram_score = long_bigrams.reduce((prev, current, index, array) ->
+      return prev + (short_bigrams[index] == current ? 1 : -1)
     , 0)
 
-    return num_matching_bigrams / word1_bigrams.length
+    return bigram_score / bigramate(word1).length
 
   find_closest = (word) ->
     sorted_words = robot.brain.get('dict-words').sort (a, b) ->
