@@ -17,7 +17,7 @@
 Sandbox = require('sandbox')
 
 module.exports = (robot) ->
-  robot.hear /(run|sandbox|js) (.*)/i, (msg) ->
+  robot.hear /^(run|sandbox|js) (.*)/i, (msg) ->
     sandbox = new Sandbox
     sandbox.run(msg.match[2], (output) ->
       msg.send output.result
