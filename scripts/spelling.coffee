@@ -34,7 +34,7 @@ module.exports = (robot) ->
       return prev + (short_bigrams[index] == current ? 1 : -1)
     , 0)
 
-    return bigram_score / bigramate(word1).length
+    return bigram_score / bigramate(long_bigrams).length
 
   find_closest = (word) ->
     sorted_words = robot.brain.get('dict-words').sort (a, b) ->
