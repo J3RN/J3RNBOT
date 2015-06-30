@@ -30,9 +30,18 @@ module.exports = (robot) ->
     short_bigrams = bigramate(sorted_words[0])
     long_bigrams = bigramate(sorted_words[1])
 
-    bigram_score = long_bigrams.reduce((prev, current, index, array) ->
+    bigram_score_foreward = long_bigrams.reduce((prev, current, index, array) ->
       return prev + (short_bigrams[index] == current ? 1 : -1)
     , 0)
+
+    short_reversed = short_bigrams.reverse()
+    long_reversed = long_bigrams.reverse()
+
+    bigram_score_reverse = long_reversed.reduce((prev, current, index, array) ->
+      return prev + (short_reversed[index] == current ? 1 : -1)
+    , 0)
+
+    bigram_score = [ bigram_score_foreward, bigram_score_reverse ].sort()[0]
 
     return bigram_score / bigramate(long_bigrams).length
 
