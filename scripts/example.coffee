@@ -36,9 +36,9 @@ module.exports = (robot) ->
   leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
 
   robot.enter (msg) ->
-    msg.send msg.random enterReplies
+    msg.send msg.random enterReplies if Math.random <= 0.1
   robot.leave (msg) ->
-    msg.send msg.random leaveReplies
+    msg.send msg.random leaveReplies if Math.random <= 0.1
   #
   # answer = process.env.HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING
   #
