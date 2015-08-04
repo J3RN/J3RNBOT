@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   gorby - Display a picture of everyone's favorite flat-faced cat
+#   gorbypuff - Display a picture of everyone's favorite flat-faced cat
 #
 # Author:
 #   bradly
@@ -58,6 +58,6 @@ gorbies = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /gorby|puff|thunderhorse/i, (msg) ->
+  robot.hear /gorbypuff|thunderhorse/i, (msg) ->
     msg.send msg.random gorbies
 
