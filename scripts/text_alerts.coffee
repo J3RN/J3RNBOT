@@ -27,7 +27,7 @@ module.exports = (robot) ->
       from: "+18599558282",
       body: msg,
     }, (err, message) ->
-      console.log(message.sid)
+      msg.send(message.sid)
     )
 
     msg.reply "Praise be unto him!"
