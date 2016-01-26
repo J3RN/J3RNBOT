@@ -21,7 +21,7 @@ module.exports = (robot) ->
   # require the Twilio module and create a REST client
   client = require('twilio')(accountSid, authToken)
 
-  robot.hear /j3rn/i, (msg) ->
+  robot.hear /\Wj3rn\W/i, (msg) ->
     client.messages.create({
       to: "5133071935",
       from: "+18599558282",
