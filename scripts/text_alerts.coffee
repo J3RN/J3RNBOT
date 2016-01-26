@@ -14,20 +14,15 @@
 #   J3RN
 
 module.exports = (robot) ->
-  # Twilio Credentials
-  accountSid = 'ACddde4590a270805e77f6f5e63dc8a42c'
-  authToken = process.env.TWILIO_AUTHTOKEN
+  client = require('twilio')()
 
-  # require the Twilio module and create a REST client
-  client = require('twilio')(accountSid, authToken)
-
-  robot.hear /\Wj3rn\W/i, (msg) ->
+  robot.hear /j3rn(?!bot)/i, (msg) ->
     client.messages.create({
-      to: "5133071935",
-      from: "+18599558282",
-      body: msg,
+      to: process.env.RECIPIENT,
+      from: process.env.SENDER,
+      body: msg.room + "> " + msg.user + "> " + msg.message.text,
     }, (err, message) ->
-      msg.send(message.sid)
+      msg.send(JSON.stringify(err))
     )
 
     msg.reply "Praise be unto him!"
