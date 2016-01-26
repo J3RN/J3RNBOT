@@ -8,7 +8,7 @@
 #   TWILIO_AUTHTOKEN
 #
 # Commands:
-#   *J3RN*
+#   *J3RN* - Replies respectfully
 #
 # Author:
 #   J3RN

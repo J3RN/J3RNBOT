@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   "I wish...", "I want...", etc
+#   "I wish...", "I want...", etc - An inspirational quote
 #
 # Author:
 #   J3RN
