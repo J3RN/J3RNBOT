@@ -20,9 +20,9 @@ module.exports = (robot) ->
     client.messages.create({
       to: process.env.RECIPIENT,
       from: process.env.SENDER,
-      body: msg.room + "> " + msg.user + "> " + msg.message.text,
+      body: msg.message.room + "> " + msg.message.user.name + "> " + msg.message.text,
     }, (err, message) ->
-      msg.send(JSON.stringify(err))
+      msg.send(JSON.stringify(err)) if (err)
     )
 
     msg.reply "Praise be unto him!"
