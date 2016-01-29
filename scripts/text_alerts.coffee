@@ -24,5 +24,3 @@ module.exports = (robot) ->
     }, (err, message) ->
       msg.send(JSON.stringify(err)) if (err)
     )
-
-    msg.reply "Praise be unto him!"
