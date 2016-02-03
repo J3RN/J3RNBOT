@@ -14,7 +14,7 @@
 //   J3RN
 
 module.exports = (robot) => {
-    robot.hear(/j3rn(?!bot)/i, (msg) => {
+    robot.hear(/(?:^|\s)j3rn(?:\s|\W|$)/i, (msg) => {
         if (robot.brain.get('praise') === true) {
             msg.reply("Praise be unto him!");
         }
