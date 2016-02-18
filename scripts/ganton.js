@@ -77,12 +77,8 @@ function performLookup(params, msg) {
         if (!error && response.statusCode == 200) {
             var json_response = JSON.parse(body);
 
-            if (json_response.length > 0) {
-                person = json_response[0];
-                msg.reply(formatPerson(person));
-            } else {
-                console.log("Empty response");
-            }
+            person = json_response[0];
+            msg.reply(formatPerson(person));
         } else if (error) {
             console.log(error);
         } else {
