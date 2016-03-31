@@ -34,6 +34,6 @@ module.exports = (robot) ->
             else
               outputs = result.result.split("\n")
               for output in outputs
-                msg.reply output
+                msg.send output
           else
             msg.reply "Unable to evaluate script: #{script}. Request returned with the status code: #{res.statusCode}"
