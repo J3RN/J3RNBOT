@@ -53,7 +53,7 @@ module.exports = (robot) => {
             `Only ${MASTER} can do that!`);
 
     const doIfWhitelisted = doIfCond(
-            (msg) => getWhitelist().indexOf(msg.message.user.name.toLowerCase()) !== -1,
+            (msg) => getWhitelist().map((e) => e.toLowerCase()).indexOf(msg.message.user.name.toLowerCase()) !== -1,
             "You are not whitelisted!");
 
     // Bot callbacks
