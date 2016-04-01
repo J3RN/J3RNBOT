@@ -17,6 +17,8 @@
 // Author:
 //   J3RN
 
+'use strict';
+
 module.exports = (robot) => {
     const MASTER = "J3RN";
 
@@ -32,8 +34,20 @@ module.exports = (robot) => {
             msg.send("No votes!");
         } else {
             const keys = Object.keys(votes);
-            msg.send(keys.map((x) => {
-                return x + ": " + votes[x];
+            const values = keys.map((e) => votes[e]);
+            let counts = {};
+
+            // For each value, increment it's count
+            values.forEach((e) => {
+                if (counts[e]) {
+                    counts[e]++;
+                } else {
+                    counts[e] = 1;
+                }
+            });
+
+            msg.send(Object.keys(counts).map((x) => {
+                return x + ": " + counts[x];
             }).join(", "));
         }
     }
