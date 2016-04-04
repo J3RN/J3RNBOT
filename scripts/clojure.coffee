@@ -16,7 +16,7 @@
 ringSessionID = ''
 
 module.exports = (robot) ->
-  robot.hear /(\(.*\))/i, (msg)->
+  robot.hear /^(\(.*\))/i, (msg)->
     script = msg.match[1]
 
     msg.http("http://www.tryclj.com/eval.json")
