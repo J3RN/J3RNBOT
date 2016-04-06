@@ -52,23 +52,24 @@ module.exports = (robot) => {
         }
     }
 
-    const doIfCond = (checkFun, errMsg) => {
-        return (msg, fun) => {
-            if (checkFun(msg)) {
-                fun(msg);
-            } else {
-                msg.reply(errMsg);
-            }
-        }
+    const isMaster = (nick) => {
+        nick.toLowerCase() == MASTER.toLowerCase();
     }
 
-    const doIfMaster = doIfCond(
-            (msg) => msg.message.user.name.toLowerCase() == MASTER.toLowerCase(),
-            `Only ${MASTER} can do that!`);
+    const isWhitelisted = (nick) => {
+        getWhitelist().map((e) => e.toLowerCase()).indexOf(nick.toLowerCase()) !== -1;
+    }
 
-    const doIfWhitelisted = doIfCond(
-            (msg) => getWhitelist().map((e) => e.toLowerCase()).indexOf(msg.message.user.name.toLowerCase()) !== -1,
-            "You are not whitelisted!");
+    const vote = function(name, item) {
+        if (votes[user]) {
+            msg.send("Changing vote from " + votes[user] + " to " + item);
+        }
+        votes[user] = item;
+
+        robot.brain.set("votes", votes);
+
+        printVotes(msg);
+    }
 
     // Bot callbacks
     robot.hear(/\.vote (\w+)/, (msg) => {
@@ -76,23 +77,16 @@ module.exports = (robot) => {
         const votes = getVotes();
         const user = msg.message.user.name;
 
-        doIfWhitelisted(msg, () => {
-            if (votes[user]) {
-                msg.send("Changing vote from " + votes[user] + " to " + item);
-            }
-            votes[user] = item;
-
-            robot.brain.set("votes", votes);
-
-            printVotes(msg);
-        });
+        if (isWhitelisted(user)) {
+            vote(user, item);
+        }
     });
 
     robot.hear(/\.rmvote/, (msg) => {
         const votes = getVotes();
         const user = msg.message.user.name;
 
-        doIfWhitelisted(msg, () => {
+        if (isWhitelisted(user)) {
             if (votes[user]) {
                 const vote = votes[user];
                 msg.send(`Vote for ${vote} removed!`);
@@ -102,7 +96,7 @@ module.exports = (robot) => {
             }
 
             printVotes(msg);
-        });
+        }
     });
 
     robot.hear(/\.votes/, (msg) => {
@@ -110,10 +104,10 @@ module.exports = (robot) => {
     });
 
     robot.hear(/\.clear/, (msg) => {
-        doIfMaster(msg, (msg) => {
+        if (isMaster(msg.message.user.name)) {
             robot.brain.set("votes", {});
             msg.send("Votes cleared!");
-        });
+        }
     });
 
     robot.hear(/.whathaveyoudone (\S+)/i, (msg) => {
@@ -146,7 +140,7 @@ module.exports = (robot) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
-        doIfMaster(msg, (msg) => {
+        if (isMaster(msg.message.user.name)) {
             if (whitelist.indexOf(user) === -1) {
                 whitelist.push(user);
                 robot.brain.set("whitelist", whitelist);
@@ -154,14 +148,14 @@ module.exports = (robot) => {
             } else {
                 msg.send(`${user} is already whitelisted!`);
             }
-        });
+        }
     });
 
     robot.hear(/\.unwhitelist (\S+)/, (msg) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
-        doIfMaster(msg, (msg) => {
+        if (isMaster(msg.message.user.name)) {
             // Filter out the given user
             newWhitelist = whitelist.filter((e) => e !== user);
 
@@ -171,6 +165,16 @@ module.exports = (robot) => {
             } else {
                 msg.send(`${user} was never whitelisted!`);
             }
-        });
+        }
+    });
+
+    robot.hear(/\.vote-as (\S+) (\S+)/, (msg) => {
+        const sender = msg.message.user.name;
+        const user = msg.match[1];
+        const item = msg.match[2];
+
+        if (isMaster(sender)) {
+            vote(user, item);
+        }
     });
 }
