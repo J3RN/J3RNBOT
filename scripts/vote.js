@@ -13,6 +13,7 @@
 //   .count - Output the count of all votes
 //   .whitelist - Add someone to the whitelist
 //   .unwhitelist - Remove someone from the whitelist
+//   .vote-as - Add a vote for a user other than yourself
 //
 // Author:
 //   J3RN
@@ -20,7 +21,7 @@
 'use strict';
 
 module.exports = (robot) => {
-    const MASTER = "J3RN";
+    const MASTER = "Shell";
 
     // Utility functions
     const getVotes = () => robot.brain.get("votes") || {}
@@ -52,15 +53,24 @@ module.exports = (robot) => {
         }
     }
 
-    const isMaster = (nick) => {
-        nick.toLowerCase() == MASTER.toLowerCase();
+    const isMasterOrError = (msg) => {
+        if (msg.message.user.name.toLowerCase() == MASTER.toLowerCase()) {
+            return true;
+        } else {
+            msg.reply(`Only ${MASTER} can do that!`);
+        }
     }
 
-    const isWhitelisted = (nick) => {
-        getWhitelist().map((e) => e.toLowerCase()).indexOf(nick.toLowerCase()) !== -1;
+    const isWhitelistedOrError = (msg) => {
+        if (getWhitelist().map((e) => e.toLowerCase()).indexOf(msg.message.user.name.toLowerCase()) !== -1) {
+            return true;
+        } else {
+            msg.reply("You are not whitelisted!");
+        }
     }
 
-    const vote = function(name, item) {
+    const vote = function(user, item, msg) {
+        const votes = getVotes();
         if (votes[user]) {
             msg.send("Changing vote from " + votes[user] + " to " + item);
         }
@@ -71,31 +81,54 @@ module.exports = (robot) => {
         printVotes(msg);
     }
 
+    const rmvote = function(user, msg) {
+        const votes = getVotes();
+        if (votes[user]) {
+            const vote = votes[user];
+            delete votes[user];
+            msg.send(`Vote for ${vote} removed!`);
+            robot.brain.set("votes", votes);
+        } else {
+            msg.reply("You have not voted yet!");
+        }
+
+        printVotes(msg);
+    }
+
     // Bot callbacks
     robot.hear(/\.vote (\w+)/, (msg) => {
         const item = msg.match[1];
-        const votes = getVotes();
         const user = msg.message.user.name;
 
-        if (isWhitelisted(user)) {
-            vote(user, item);
+        if (isWhitelistedOrError(msg)) {
+            vote(user, item, msg);
+        }
+    });
+
+    robot.hear(/\.vote-as (\S+) (\S+)/, (msg) => {
+        const sender = msg.message.user.name;
+        const user = msg.match[1];
+        const item = msg.match[2];
+
+        if (isMasterOrError(msg)) {
+            vote(user, item, msg);
         }
     });
 
     robot.hear(/\.rmvote/, (msg) => {
-        const votes = getVotes();
         const user = msg.message.user.name;
 
-        if (isWhitelisted(user)) {
-            if (votes[user]) {
-                const vote = votes[user];
-                msg.send(`Vote for ${vote} removed!`);
-                robot.brain.set("votes", votes);
-            } else {
-                msg.reply("You have not voted yet!");
-            }
+        if (isWhitelistedOrError(msg)) {
+            rmvote(user, msg);
+        }
+    });
 
-            printVotes(msg);
+    robot.hear(/\.rmvote-as (\S+)/, (msg) => {
+        const votes = getVotes();
+        const user = msg.match[1];
+
+        if (isMasterOrError(msg)) {
+            rmvote(user, msg)
         }
     });
 
@@ -104,7 +137,7 @@ module.exports = (robot) => {
     });
 
     robot.hear(/\.clear/, (msg) => {
-        if (isMaster(msg.message.user.name)) {
+        if (isMasterOrError(msg)) {
             robot.brain.set("votes", {});
             msg.send("Votes cleared!");
         }
@@ -140,7 +173,7 @@ module.exports = (robot) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
-        if (isMaster(msg.message.user.name)) {
+        if (isMasterOrError(msg)) {
             if (whitelist.indexOf(user) === -1) {
                 whitelist.push(user);
                 robot.brain.set("whitelist", whitelist);
@@ -155,7 +188,7 @@ module.exports = (robot) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
-        if (isMaster(msg.message.user.name)) {
+        if (isMasterOrError(msg)) {
             // Filter out the given user
             newWhitelist = whitelist.filter((e) => e !== user);
 
@@ -165,16 +198,6 @@ module.exports = (robot) => {
             } else {
                 msg.send(`${user} was never whitelisted!`);
             }
-        }
-    });
-
-    robot.hear(/\.vote-as (\S+) (\S+)/, (msg) => {
-        const sender = msg.message.user.name;
-        const user = msg.match[1];
-        const item = msg.match[2];
-
-        if (isMaster(sender)) {
-            vote(user, item);
         }
     });
 }
