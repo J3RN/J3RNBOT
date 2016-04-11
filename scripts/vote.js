@@ -21,7 +21,7 @@
 'use strict';
 
 module.exports = (robot) => {
-    const MASTER = "Shell";
+    const MASTER = "J3RN";
 
     // Utility functions
     const getVotes = () => robot.brain.get("votes") || {}
