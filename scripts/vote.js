@@ -11,10 +11,9 @@
 //   .vote <item> - Adds a vote for that item
 //   .votes - Shows all votes
 //   .count - Output the count of all votes
-//   .whitelist - Add someone to the whitelist
-//   .unwhitelist - Remove someone from the whitelist
-//   .vote-as - Add a vote for a user other than yourself
-//   .count - Show how many votes have been counted
+//   .whitelist <user> - Add someone to the whitelist
+//   .unwhitelist <user> - Remove someone from the whitelist
+//   .vote-as <user> <item> - Add a vote for a user other than yourself
 //
 // Author:
 //   J3RN
