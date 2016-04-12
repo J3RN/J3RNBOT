@@ -5,7 +5,7 @@
 //   None
 //
 // Configuration:
-//   None
+//   VOTES_MASTER environment variable
 //
 // Commands:
 //   .vote <item> - Adds a vote for that item
@@ -21,7 +21,7 @@
 'use strict';
 
 module.exports = (robot) => {
-    const MASTER = "J3RN";
+    const MASTER = process.env.VOTES_MASTER;
 
     // Utility functions
     const getVotes = () => robot.brain.get("votes") || {}
