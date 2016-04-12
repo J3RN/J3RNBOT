@@ -14,6 +14,7 @@
 //   .whitelist - Add someone to the whitelist
 //   .unwhitelist - Remove someone from the whitelist
 //   .vote-as - Add a vote for a user other than yourself
+//   .count - Show how many votes have been counted
 //
 // Author:
 //   J3RN
@@ -199,5 +200,11 @@ module.exports = (robot) => {
                 msg.send(`${user} was never whitelisted!`);
             }
         }
+    });
+
+    robot.hear(/\.count/, (msg) => {
+        const votes = getVotes();
+        const numVotes = Object.keys(votes).filter((e) => votes.hasOwnProperty(e)).length;
+        msg.send(`${numVotes} votes`);
     });
 }
