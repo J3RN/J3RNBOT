@@ -54,7 +54,7 @@ module.exports = (robot) => {
     }
 
     const isMasterOrError = (msg) => {
-        if (msg.message.user.name.toLowerCase() == MASTER.toLowerCase()) {
+        if (msg.message.user.name.toLowerCase() === MASTER.toLowerCase()) {
             return true;
         } else {
             msg.reply(`Only ${MASTER} can do that!`);
@@ -192,7 +192,7 @@ module.exports = (robot) => {
             // Filter out the given user
             newWhitelist = whitelist.filter((e) => e !== user);
 
-            if (newWhitelist.length != whitelist.length) {
+            if (newWhitelist.length !== whitelist.length) {
                 robot.brain.set("whitelist", newWhitelist);
                 msg.send(`${user} unwhitelisted!`);
             } else {
