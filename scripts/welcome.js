@@ -14,7 +14,12 @@
 //   jingweno
 
 module.exports = (robot) => {
-  robot.enter((msg) => {
-    msg.send "Just a small town bot..."
-  });
+    messages = [
+        "Just a small town bot",
+        "Gonna take a sentimental J3RNI",
+    ];
+
+    robot.enter((msg) => {
+        msg.send(messages[Math.floor(Math.random() * messages.length)]);
+    });
 }
