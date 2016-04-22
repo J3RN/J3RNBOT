@@ -19,7 +19,11 @@ module.exports = (robot) => {
         "Gonna take a sentimental J3RNI",
     ];
 
-    process.env.HUBOT_IRC_ROOMS.split(',').forEach((room) => {
-        robot.messageRoom(room, messages[Math.floor(Math.random() * messages.length)]);
-    });
+    robot.listen(
+            (message) => {
+                return message.constructor.name == "EnterMessage" && message.user.id === robot.name;
+            },
+            (response) => {
+                response.send(messages[Math.floor(Math.random() * messages.length)]);
+            });
 }
