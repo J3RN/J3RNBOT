@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot clojure|clj <script> - Evaluate one line of Clojure script
+#   hubot (<script>) - Evaluate one line of Clojure script
 #
 # Author:
 #   jingweno
@@ -16,7 +16,7 @@
 ringSessionID = ''
 
 module.exports = (robot) ->
-  robot.hear /^(\(.*\))/i, (msg)->
+  robot.respond /(\(.*\))/i, (msg)->
     script = msg.match[1]
 
     msg.http("http://www.tryclj.com/eval.json")
