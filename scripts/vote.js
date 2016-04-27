@@ -75,6 +75,11 @@ module.exports = (robot) => {
 
     const vote = function(user, item, msg) {
         const votes = getVotes();
+
+        if (item.length > 20) {
+            item = item.substr(0, 20);
+        }
+
         if (votes[user]) {
             msg.send("Changing vote from " + votes[user] + " to " + item);
         }
