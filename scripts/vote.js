@@ -96,7 +96,7 @@ module.exports = (robot) => {
     }
 
     // Bot callbacks
-    robot.hear(/\.vote (\w+)/, (msg) => {
+    robot.hear(/\.vote (.*)/, (msg) => {
         const item = msg.match[1];
         const user = msg.message.user.name;
 
@@ -105,7 +105,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.vote-as (\S+) (\S+)/, (msg) => {
+    robot.hear(/\.vote-as (\S+) (.*)/, (msg) => {
         const sender = msg.message.user.name;
         const user = msg.match[1];
         const item = msg.match[2];
@@ -154,7 +154,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.whodunnit (\S+)/i, (msg) => {
+    robot.hear(/\.whodunnit (.*)/i, (msg) => {
         const votes = getVotes();
         const item = msg.match[1];
 
