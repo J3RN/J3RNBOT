@@ -23,6 +23,10 @@
 module.exports = (robot) => {
     const MASTER = process.env.VOTES_MASTER;
 
+    // Define commonly used regex's
+    const nickRegex = "(\\S+)";
+    const itemRegex = "([\\w\\s]+)";
+
     // Utility functions
     const getVotes = () => robot.brain.get("votes") || {}
 
@@ -96,7 +100,7 @@ module.exports = (robot) => {
     }
 
     // Bot callbacks
-    robot.hear(/\.vote (.*)/, (msg) => {
+    robot.hear(new RegExp("\.vote " + itemRegex, "i"), (msg) => {
         const item = msg.match[1];
         const user = msg.message.user.name;
 
@@ -105,7 +109,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.vote-as (\S+) (.*)/, (msg) => {
+    robot.hear(new RegExp("\.vote-as " + nickRegex + " " + itemRegex, "i"), (msg) => {
         const sender = msg.message.user.name;
         const user = msg.match[1];
         const item = msg.match[2];
@@ -115,7 +119,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.rmvote/, (msg) => {
+    robot.hear(/\.rmvote/i, (msg) => {
         const user = msg.message.user.name;
 
         if (isWhitelistedOrError(msg)) {
@@ -123,7 +127,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.rmvote-as (\S+)/, (msg) => {
+    robot.hear(new RegExp("\.rmvote-as" + nickRegex + " " + itemRegex, "i"), (msg) => {
         const votes = getVotes();
         const user = msg.match[1];
 
@@ -132,18 +136,18 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.votes/, (msg) => {
+    robot.hear(/\.votes/i, (msg) => {
         printVotes(msg);
     });
 
-    robot.hear(/\.clear/, (msg) => {
+    robot.hear(/\.clear/i, (msg) => {
         if (isMasterOrError(msg)) {
             robot.brain.set("votes", {});
             msg.send("Votes cleared!");
         }
     });
 
-    robot.hear(/.whathaveyoudone (\S+)/i, (msg) => {
+    robot.hear(new RegExp("\.whathaveyoudone " + nickRegex, "i"), (msg) => {
         const votes = getVotes();
         const user = msg.match[1];
 
@@ -154,7 +158,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.whodunnit (.*)/i, (msg) => {
+    robot.hear(new RegExp("\.whodunnit " + itemRegex, "i"), (msg) => {
         const votes = getVotes();
         const item = msg.match[1];
 
@@ -169,7 +173,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.whitelist (\S+)/, (msg) => {
+    robot.hear(new RegExp("\.whitelist " + nickRegex, "i"), (msg) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
@@ -184,7 +188,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.unwhitelist (\S+)/, (msg) => {
+    robot.hear(new RegExp("\.unwhitelist " + nickRegex, "i"), (msg) => {
         const user = msg.match[1];
         const whitelist = getWhitelist();
 
@@ -201,7 +205,7 @@ module.exports = (robot) => {
         }
     });
 
-    robot.hear(/\.count/, (msg) => {
+    robot.hear(/\.count/i, (msg) => {
         const votes = getVotes();
         const numVotes = Object.keys(votes).filter((e) => votes.hasOwnProperty(e)).length;
         msg.send(`${numVotes} votes`);
