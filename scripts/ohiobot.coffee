@@ -16,7 +16,7 @@
 module.exports = (robot) ->
 
   robot.hear /^\s*o\W*h\W*\s*$/i, (msg) ->
-    msg.send "IO!"
+    msg.send "I/O!"
     robot.brain.set("ios", robot.brain.get("ios") + 1)
 
   robot.hear /^.ios/, (msg) ->
