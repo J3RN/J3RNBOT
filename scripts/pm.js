@@ -17,7 +17,7 @@
 
 module.exports = (robot) => {
     robot.respond(/pm me/, (msg) => {
-        const channel = msg.send({user: {name:  msg.message.user.name}}, "HI!");
+        robot.send({user: {name:  msg.message.user.name}}, "HI!");
     });
 }
 
