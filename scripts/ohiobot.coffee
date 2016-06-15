@@ -19,5 +19,5 @@ module.exports = (robot) ->
     msg.send "I/O!"
     robot.brain.set("ios", robot.brain.get("ios") + 1)
 
-  robot.hear /^.ios/, (msg) ->
+  robot.hear /^\.ios/, (msg) ->
     msg.send robot.brain.get("ios") + " IOs have been dealt"
