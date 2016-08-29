@@ -23,7 +23,7 @@ module.exports = (robot) ->
 
   amMotivational = true
 
-  robot.hear /^I (want|wish)/i, (msg) ->
+  robot.hear /^I (?:really )?(want|wish)/i, (msg) ->
     msg.reply msg.random responses if amMotivational
 
   robot.respond /lose motivation/, (msg) ->
