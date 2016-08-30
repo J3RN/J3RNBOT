@@ -219,4 +219,13 @@ module.exports = (robot) => {
         const numVotes = Object.keys(votes).filter((e) => votes.hasOwnProperty(e)).length;
         msg.send(`${numVotes} votes`);
     });
+
+    robot.hear(/^\.whosvoted/i, (msg) => {
+	const voters = Object.keys(getVotes());
+	if (voters.length === 0) {
+	    msg.send('No one has voted!');
+	} else {
+	    msg.send(voters.join(', '));
+	}
+    });
 }
