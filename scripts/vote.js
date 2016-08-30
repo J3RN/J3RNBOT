@@ -21,7 +21,11 @@
 'use strict';
 
 module.exports = (robot) => {
+    // Grab master's name from the environment
     const MASTER = process.env.VOTES_MASTER;
+
+    // Set maximum vote length
+    const MAX_VOTE_LENGTH = 30;
 
     // Define commonly used regex's
     const nickRegex = "(\\S+)";
@@ -76,8 +80,8 @@ module.exports = (robot) => {
     const vote = function(user, item, msg) {
         const votes = getVotes();
 
-        if (item.length > 20) {
-            item = item.substr(0, 20);
+        if (item.length > MAX_VOTE_LENGTH) {
+            item = item.substr(0, MAX_VOTE_LENGTH);
         }
 
         if (votes[user]) {
