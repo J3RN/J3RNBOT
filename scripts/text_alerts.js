@@ -2,19 +2,19 @@
 //   Sends me a text when I am mentioned
 //
 // Dependencies:
-//   twilio
+//   request
 //
 // Configuration:
-//   TWILIO_AUTHTOKEN
+//   PUSHBULLET_ACCESS_TOKEN
 //
 // Commands:
-//   *J3RN* - Replies respectfully
+//   *J3RN* - sends a push to the configured account
 //
 // Author:
 //   J3RN
 
 module.exports = (robot) => {
-    var client = require('twilio')();
+    var request = require('request');
     var context = {};
 
     const enqueueMessage = (msg) => {
@@ -32,24 +32,33 @@ module.exports = (robot) => {
 	}
     }
 
+    const pushContext = (msg) => {
+	const room = msg.message.room;
+	const message = context[room].reduce((acc, x) => {
+	    return acc + "\n" + x[0] + ": " + x[1];
+	}, "");
+
+	request.post({
+	    url: 'https://api.pushbullet.com/v2/pushes',
+	    headers: {
+		'Access-Token': process.env.PUSHBULLET_ACCESS_TOKEN,
+		'Content-Type': 'application/json'
+	    },
+	    form: {
+		body: message,
+		title: "Message from J3RNBOT",
+		type: 'note'
+	    }
+	}).on('error', (error) => {
+	    msg.reply(error);
+	});
+    }
+
     robot.hear(/.*/, (msg) => {
 	enqueueMessage(msg);
 
-	if (msg.message.match(/(?:^|\s)j3rn(?:\s|\W|$)/i)) {
-	    const room = msg.message.room;
-	    const message = context[room].reduce((acc, x) => {
-		return acc + "\n" + x[0] + ": " + x[1];
-	    }, "");
-
-            client.messages.create({
-		to: process.env.RECIPIENT,
-		from: process.env.SENDER,
-		body: "<" + room + ">" + message
-            }, (err, message) => {
-		if (err) {
-                    msg.send(JSON.stringify(err));
-		}
-            });
+	if (msg.message.match(/j3rn/i)) {
+	    pushContext(msg);
 	}
     });
 }
