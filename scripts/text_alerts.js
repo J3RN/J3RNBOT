@@ -46,7 +46,7 @@ module.exports = (robot) => {
 	    },
 	    form: {
 		body: message,
-		title: "Message from J3RNBOT",
+		title: "Message from " + room,
 		type: 'note'
 	    }
 	}).on('error', (error) => {
