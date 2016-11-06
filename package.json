@@ -6,19 +6,19 @@
   "description": "A trollacious bot for #cwdg",
   "dependencies": {
     "hubot": "^2.11.2",
-    "hubot-diagnostics": "0.0.1",
+    "hubot-diagnostics": "^0.0.1",
     "hubot-google-images": "^0.1.4",
     "hubot-google-translate": "^0.1.0",
     "hubot-help": "^0.1.1",
     "hubot-irc": "^0.2.7",
-    "hubot-maps": "0.0.1",
-    "hubot-redis-brain": "0.0.2",
+    "hubot-maps": "^0.0.1",
+    "hubot-redis-brain": "^0.0.2",
     "hubot-rules": "^0.1.0",
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.2",
     "hubot-youtube": "^0.1.2",
     "request": "^2.69.0",
-    "sandbox": "0.8.3",
+    "sandbox": "^0.8.3",
     "twilio": "^2.8.0"
   },
   "engines": {
