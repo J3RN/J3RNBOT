@@ -40,11 +40,11 @@ module.exports = (robot) => {
                 msg.send('| THE TIMES  |');
                 msg.send('| ~ ~~~ ~~ ~ |');
                 msg.send('| ~ ~~~ ~~ ~ |');
-                msg.send('\\ ~ ~~~ ~~ ~ \\     ____');
-                msg.send(' | ~ ~~~ ~~ ~ |   /____\\');
-                msg.send(' | ~ ~~~ ~~ ~ |   |____|');
-                msg.send(' | ~ ~~~ ~~ ~ |   |____|');
-                msg.send(' +------------+    \\__/');
+                msg.send('\\ ~ ~~~ ~~ ~ \\   ;)( ;');
+                msg.send(' | ~ ~~~ ~~ ~ |   :----:');
+                msg.send(' | ~ ~~~ ~~ ~ |  C|====|');
+                msg.send(' | ~ ~~~ ~~ ~ |   |    |');
+                msg.send(' +------------+   `----\'');
             } else {
                 msg.send('OK then');
             }
