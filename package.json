@@ -17,6 +17,7 @@
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.2",
     "hubot-youtube": "^0.1.2",
+    "hubot-forecastio": ">= 1.0.0",
     "request": "^2.69.0",
     "sandbox": "^0.8.3",
     "twilio": "^2.8.0"
