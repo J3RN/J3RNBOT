@@ -9,11 +9,17 @@
 //
 // Commands:
 //   .vote <item> - Adds a vote for that item
+//   .vote-as <user> <item> - Add a vote for a user other than yourself (master only)
+//   .rmvote - Removes your vote
+//   .rmvote-as <user> <item> - Remove a vote for a user other than yourself (master only)
 //   .votes - Shows all votes
+//   .clear - Clears the votes (master only)
+//   .whathaveyoudone <user> - Replies what the given user has voted for
+//   .whodunnit <item> - Replies who voted for the given item
+//   .whitelist <user> - Add someone to the whitelist (master only)
+//   .unwhitelist <user> - Remove someone from the whitelist (master only)
 //   .count - Output the count of all votes
-//   .whitelist <user> - Add someone to the whitelist
-//   .unwhitelist <user> - Remove someone from the whitelist
-//   .vote-as <user> <item> - Add a vote for a user other than yourself
+//   .whosvoted - Output the list of all users who have voted
 //
 // Author:
 //   J3RN

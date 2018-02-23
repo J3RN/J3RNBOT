@@ -8,9 +8,9 @@
 //   None
 //
 // Commands:
-//   <dot-number <name.number>
-//   <fname <first name>
-//   <lname <last name>
+//   .dot-number <name.number> - Looks up an OSU person by their name-dot-number
+//   .fname <first name> - Looks up an OSU person by their first name
+//   .lname <last name> - Looks up an OSU person by their last name
 //
 // Author:
 //   J3RN
@@ -22,17 +22,17 @@ module.exports = (robot) => {
         var text = msg.match[0];
         var params = {};
 
-        var dotnum = text.match(/\<dot-number (\w+\.\d+)/);
+        var dotnum = text.match(/\.dot-number (\w+\.\d+)/);
         if (dotnum) {
             params["name_n"] = dotnum[1];
         }
 
-        var fname = text.match(/\<fname (\w+)/);
+        var fname = text.match(/\.fname (\w+)/);
         if (fname) {
             params["firstname"] = fname[1];
         }
 
-        var lname = text.match(/\<lname (\w+)/);
+        var lname = text.match(/\.lname (\w+)/);
         if (lname) {
             params["lastname"] = lname[1];
         }
