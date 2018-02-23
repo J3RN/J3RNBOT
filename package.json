@@ -7,7 +7,7 @@
   "dependencies": {
     "hubot": "^2.11.2",
     "hubot-diagnostics": "^0.0.1",
-    "hubot-help": "^0.1.1",
+    "hubot-help": "^0.2.2",
     "hubot-irc": "^0.2.7",
     "hubot-redis-brain": "^0.0.2",
     "hubot-rules": "^0.1.0",
