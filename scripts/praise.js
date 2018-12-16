@@ -8,7 +8,9 @@
 //   None
 //
 // Commands:
+//   praise J3RN! - begin praising
 //   *J3RN* - Praise be unto him!
+//   stop praising! - stop praising
 //
 // Author:
 //   J3RN

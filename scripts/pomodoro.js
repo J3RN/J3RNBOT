@@ -6,8 +6,8 @@
 // Configuration:
 //
 // Commands:
-//   @covermybot start timer
-//   @covermybot stop timer
+//   hubot start timer
+//   hubot stop timer
 //
 // Notes:
 //

@@ -60,4 +60,3 @@ gorbies = [
 module.exports = (robot) ->
   robot.hear /gorbypuff|thunderhorse/i, (msg) ->
     msg.send msg.random gorbies
-

@@ -1,5 +1,5 @@
 // Description:
-//   PM's you as a Service
+//   PMs you as a Service
 //
 // Dependencies:
 //   None
@@ -53,4 +53,3 @@ module.exports = (robot) => {
         }
     });
 }
-

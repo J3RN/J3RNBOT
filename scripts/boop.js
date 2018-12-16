@@ -8,13 +8,13 @@
 //   None
 //
 // Commands:
-//   beep
+//   beep - boop!
 //
 // Author:
 //   J3RN
 
 module.exports = (robot) => {
     robot.respond(/beep$/i, (msg) => {
-	msg.reply("boop!");
+        msg.reply("boop!");
     });
 }

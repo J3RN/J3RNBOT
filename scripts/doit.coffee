@@ -8,7 +8,9 @@
 #   None
 #
 # Commands:
+#   gain motivation - Make hubot inspirational
 #   "I wish...", "I want...", etc - An inspirational quote
+#   lose motivation - Make hubot not inspirational anymore
 #
 # Author:
 #   J3RN
