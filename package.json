@@ -1,7 +1,6 @@
 {
   "name": "j3rnbot",
   "version": "0.0.0",
-  "private": true,
   "author": "Jonathan Arnett <jonarnett90@gmail.com>",
   "description": "A trollacious bot for #cwdg",
   "dependencies": {
